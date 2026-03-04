@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -71,3 +72,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# MindMesh
+MindMesh is a tool designed to create self-organized maps in a simple, fast and intuitive way.
+>>>>>>> 3ce2a14bdf82ff4fc771fc91a9b14786bb6c8e16
