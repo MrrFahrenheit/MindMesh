@@ -5,12 +5,14 @@ export default function DefaultButton({
     label,
     rightIcon,
     className = "",
+    onClickFunc,
     ...props
 }: {
     Icon: React.ReactNode,
     label: string,
     rightIcon?: React.ReactNode,
-    className?: string
+    className?: string,
+    onClickFunc?: () => void
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <button
@@ -50,6 +52,7 @@ export default function DefaultButton({
                 ` ${className}`
             }
             {...props}
+            onClick={onClickFunc}
         >
             <span className="shrink-0 transition-transform duration-300 group-hover:scale-110">
                 {Icon}

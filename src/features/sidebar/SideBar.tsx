@@ -27,7 +27,7 @@ export default function SideBar() {
 
       {/* Botón de Acción Principal */}
       <div className="px-4 mb-6">
-        <DefaultButton Icon={<PlusCircle size={18} />} label="Nuevo Nodo" />
+        <DefaultButton Icon={<PlusCircle size={18} />} label="Nuevo Nodo" onClickFunc={() => navigate("/minding/")} />
       </div>
 
       {/* Navegación */}
