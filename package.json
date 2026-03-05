@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
+  "homepage": "https://mrrfahrenheit.github.io/MindMesh/",
+   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
@@ -16,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.35.0",
+    "gh-pages": "^6.3.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
     "lucide-react": "^0.577.0",
