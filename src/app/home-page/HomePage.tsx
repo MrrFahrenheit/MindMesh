@@ -1,6 +1,15 @@
+import { useEffect } from "react";
 import { ThemeToggle } from "../../components/shared/ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+
+  useEffect(() => {
+    document.title = "MindMesh - Conecta tus ideas, mapea tu mente";
+  },[])
+
+  const navigate = useNavigate();
+
   return (
     <main className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background transition-colors duration-500">
       
@@ -13,7 +22,6 @@ export default function HomePage() {
         }} 
       />
 
-      {/* 2. Aura de fondo: En modo claro usamos un color primario más suave */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 h-120 bg-primary/20 dark:bg-primary/10 blur-[100px] dark:blur-[130px] rounded-full z-0 pointer-events-none" />
 
       <nav className="absolute top-6 right-6 z-20">
@@ -38,7 +46,8 @@ export default function HomePage() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-          <button className="group relative px-10 py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/25 dark:shadow-primary/10 border border-border">
+          <button className="group relative px-10 py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/25 dark:shadow-primary/10 border border-border hover:cursor-pointer"
+          onClick={() => {navigate("/app/")}}>
             Empezar a Crear
             {/* Efecto de brillo al pasar el mouse */}
             <span className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
