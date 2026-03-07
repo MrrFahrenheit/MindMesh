@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import WorkSideBar from "../../features/sidebar/WorkSideBar";
 
 export default function WorkLayout() {
     return (
