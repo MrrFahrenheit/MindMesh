@@ -1,13 +1,14 @@
 import { useReactFlow } from "@xyflow/react";
-import { Bold, BoxIcon, Circle, CloudIcon, DiamondIcon, GripVertical, Italic, MessageCircleIcon, PaintBucketIcon, RectangleHorizontalIcon, SquareIcon, TextIcon, Trash2, TriangleIcon, TypeIcon, UnderlineIcon, X } from "lucide-react";
+import { Bold, BoxIcon, CaseUpperIcon, Circle, CloudIcon, DiamondIcon, GripVertical, Italic, MessageCircleIcon, PaintBucketIcon, RectangleHorizontalIcon, SquareIcon, TextIcon, Trash2, TriangleIcon, TypeIcon, UnderlineIcon, X } from "lucide-react";
 import { useRef, useState } from "react";
 
 interface EditNodeMenuProps {
   nodeId: string;
   onCloseMenu: () => void;
+  onOpenColorBar:() => void;
 }
 
-export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps) {
+export default function EditNodeMenu({ nodeId, onCloseMenu, onOpenColorBar }: EditNodeMenuProps) {
   const { getNode, updateNodeData, deleteElements } = useReactFlow();
   const [position, setPosition] = useState({ x: window.innerWidth - 300, y: 100 });
   const dragging = useRef(false);
@@ -162,13 +163,13 @@ export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps)
               <UnderlineIcon size={16} />
             </button>
             <button
-              onClick={() => toggleTextStyle("underline")}
+              onClick={onOpenColorBar}
               title="Color"
               className={`p-1 rounded ${
                 node.data.underline ? "bg-primary/20" : "hover:bg-primary/10"
               }`}
             >
-              <TypeIcon size={16} color={node.data.color} />
+              <SquareIcon  size={16} fill={node.data.textColor} />
             </button>
            </div>
         </div>

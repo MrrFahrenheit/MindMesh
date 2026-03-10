@@ -19,6 +19,7 @@ import { DeleteNodeManager } from "../../../lib/workboardUtils.tsx";
 import type { IEdge, MindMeshNodeData } from "../../../types/IWorkPlace";
 import EditNoveMenu from "./EditNoveMenu";
 import FunctionalDragMenu from "./FunctionalDragMenu";
+import RgbMenu from "./RgbMenu.tsx";
 
 const nodeTypes = {
     mindmesh: MindMeshNode,
@@ -31,8 +32,9 @@ export default function WorkBoard() {
     }, []);
 
     const [projectName, setProjectName] = useState<string>("New Project");
-    const [nodes, setNodes] = useState<Array<Node>>(() => [
-        { id: "1", type: "mindmesh", data: { title: "Primer Nodo", label: "Idea principal", shape: "square", onSelect: openMenu } as any, position: { x: 250, y: 5 } },
+    const [openColorBar, setOpenColorBar] = useState<boolean>(false);
+    const [nodes, setNodes] = useState<Array<MindMeshNodeData>>(() => [
+        { id: "1", type: "mindmesh", data: { title: "Primer Nodo", textColor:"", label: "Idea principal", shape: "square", onSelect: openMenu } as any, position: { x: 250, y: 5 } },
     ]);
     const [edges, setEdges] = useState<Array<IEdge>>([]);
     const { theme } = useTheme();
@@ -43,6 +45,10 @@ export default function WorkBoard() {
 
     const flowTheme = theme === "dark" ? "dark" : "light";
 
+    const handleOpenColorBar = () => {
+        setOpenColorBar(prev => !prev)
+    }
+
     const addNode = useCallback(() => {
         const id = `${nodes.length + 1}`;
         const newNode: MindMeshNodeData = {
@@ -52,7 +58,6 @@ export default function WorkBoard() {
                 title: `Nuevo Nodo ${id}`,
                 label: `Describe Nodo ${id}`,
                 shape: "square",
-                color: "#ffffff",
                 bold: false,
                 italic: false,
                 underline: false,
@@ -64,7 +69,14 @@ export default function WorkBoard() {
     }, [nodes]);
 
     // Handlers obligatorios de React Flow
-    const onNodesChange = useCallback((changes: Array<NodeChange>) => setNodes((nds) => applyNodeChanges(changes, nds)), []);
+    const onNodesChange = useCallback((changes: Array<NodeChange>) => {
+        setNodes((nds) =>
+            applyNodeChanges(changes, nds).map(node => ({
+                ...node,
+                type: node.type ?? "mindmesh"
+            })) as MindMeshNodeData[]
+        );
+    }, []);
     const onEdgesChange = useCallback((changes: Array<EdgeChange<IEdge>>) => setEdges((eds) => applyEdgeChanges(changes, eds)), []);
     const onConnect = useCallback((connection: Connection) => {
         setEdges((eds) =>
@@ -97,9 +109,9 @@ export default function WorkBoard() {
 
             >
                 {openNodeMenu && editingNodeId && (
-                    <EditNoveMenu onCloseMenu={() => setOpenNodeMenu(false)} nodeId={editingNodeId} />
+                    <EditNoveMenu onCloseMenu={() => setOpenNodeMenu(false)} nodeId={editingNodeId} onOpenColorBar={handleOpenColorBar} />
                 )}
-
+                {openColorBar && <RgbMenu onClose={handleOpenColorBar} editingNodeId={editingNodeId} nodesOnBoard={nodes} setNodesOnBoard={setNodes} />}
                 <DeleteNodeManager />
                 <MiniMap
                     style={{

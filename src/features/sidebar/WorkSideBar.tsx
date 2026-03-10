@@ -1,6 +1,7 @@
-import { ArrowRightSquareIcon, Brain, CardSimIcon, GripVertical, LayoutGrid, PlusIcon, ProjectorIcon, StickyNote, XIcon } from "lucide-react";
+import { ArrowRightSquareIcon, Brain, CardSimIcon, GripVertical, LayoutGrid, PlusIcon, ProjectorIcon, SaveIcon, StickyNote, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { ThemeToggle } from "../../components/shared/ThemeToggle";
+import DefaultButton from "../../components/shared/DefaultButton";
 
 interface WorkSideBarProps {
   onAddNode: (type: string) => void;
@@ -24,7 +25,7 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
 
   const handleClickSave = () => {
     if(projectName == "" || projectName.length <= 0){
-      setOpenSaveButton(true);
+      setOpenSaveButton(prev => !prev);
     }
   }
   
@@ -106,8 +107,15 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
           <CardSimIcon size={18} />
           <span className="text-sm font-medium">Guardar Proyecto</span>
         </button>
-        <span className="text-xs font-medium">Escribe un nombre para el proyecto.</span>
-        {openSaveButton && <input className="bg-card/20 border border-amber-50 rounded-sm p-1 text-xs" value={"Nuevo Proyecto"} />}
+        {openSaveButton && (
+        <div className="bg-zinc-900 p-3 rounded-md">
+        <span className="text-xs font-medium text-white">Escribe un nombre para el proyecto.</span>
+           <input className="bg-card/20 border border-amber-50 rounded-sm p-1 text-xs mb-2" />
+         <DefaultButton label="Guardar" Icon={<SaveIcon size={16} />} className="text-white" />
+
+        </div>
+        
+        )}
         <button
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors  hover:cursor-pointer hover:bg-black/30`}
         >
