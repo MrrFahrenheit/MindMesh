@@ -1,7 +1,6 @@
 import { useReactFlow } from "@xyflow/react";
-import { AlignLeft, BoxIcon, Circle, CloudIcon, DiamondIcon, GripVertical, MessageCircleIcon, RectangleHorizontalIcon, SquareIcon, SquaresExclude, SquaresIntersect, Trash2, TriangleIcon, Type, X } from "lucide-react";
+import { Bold, BoxIcon, Circle, CloudIcon, DiamondIcon, GripVertical, Italic, MessageCircleIcon, PaintBucketIcon, RectangleHorizontalIcon, SquareIcon, TextIcon, Trash2, TriangleIcon, TypeIcon, UnderlineIcon, X } from "lucide-react";
 import { useRef, useState } from "react";
-import { getNodeShape } from "../../../lib/nodeUtils";
 
 interface EditNodeMenuProps {
   nodeId: string;
@@ -32,6 +31,15 @@ export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps)
     updateNodeData(nodeId, { shape: shapeName });
   }
 
+  const changeNodeColor = (color:string) => {
+    updateNodeData(nodeId, { color });
+  }
+
+  const toggleTextStyle = (style: "bold" | "italic" | "underline") => {
+    const current = (node.data as any)[style] as boolean | undefined;
+    updateNodeData(nodeId, { [style]: !current });
+  }
+
   return (
     <div
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
@@ -51,9 +59,7 @@ export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps)
         </button>
       </div>
 
-      {/* Cuerpo del Formulario */}
       <div className="p-4 flex flex-col gap-4">
-        {/* Input de Título */}
         <div className="flex flex-col gap-1.5">
           <label className="text-[15px] font-medium text-muted-foreground flex items-center gap-1">
             <BoxIcon size={16} /> Formas
@@ -65,9 +71,9 @@ export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps)
               { key: "circle", icon: <Circle />, title: "Círculo" },
               { key: "triangle", icon: <TriangleIcon />, title: "Triángulo" },
               { key: "cloud", icon: <CloudIcon />, title: "Nube" },
-              { key: "BubbleChat", icon: <MessageCircleIcon />, title:"Burbuja de Chat" },
-              { key: "Romboid", icon: <DiamondIcon />, title: "Romboide" },
-              { key: "Rombs", icon:<SquareIcon style={{ transform: 'skewX(-20deg)' }} />, title: "Rombo" },
+              { key: "bubblechat", icon: <MessageCircleIcon />, title:"Burbuja de Chat" },
+              { key: "romboid", icon: <DiamondIcon />, title: "Romboide" },
+              { key: "romb", icon:<SquareIcon style={{ transform: 'skewX(-20deg)' }} />, title: "Rombo" },
             ].map((shape) => (
               <button
                 key={shape.key}
@@ -81,6 +87,90 @@ export default function EditNodeMenu({ nodeId, onCloseMenu }: EditNodeMenuProps)
               </button>
             ))}
           </div>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-[15px] font-medium text-muted-foreground flex items-center gap-1">
+            <PaintBucketIcon size={16} /> Color del nodo
+          </label>
+           <div className="flex flex-wrap items-center gap-2">
+            {[
+              { key: "#ff0000", title: "Rojo" },
+              { key: "#00ff00", title: "Verde" },
+              { key: "#0000ff", title: "Azul" },
+              { key: "#ffff00", title: "Amarillo" },
+              { key: "#000000", title: "Negro" },
+              { key: "#ffffff", title: "Blanco" },
+            ].map((color) => (
+              <button
+                key={color.key}
+                onClick={() => changeNodeColor(color.key)}
+                title={color.title}
+                className={`p-1 rounded ${
+                  node.data.color === color.key ? "bg-primary/20" : "hover:bg-primary/10"
+                }`}
+              >
+                <SquareIcon fill={color.key} />
+              </button>
+            ))}
+            {/* custom rgb picker */}
+            <button
+              onClick={() => {
+                const rgb = prompt("Introduce un color RGB o hex (#rrggbb)");
+                if (rgb) changeNodeColor(rgb);
+              }}
+              title="Personalizado"
+              className={`p-1 rounded ${
+                (node.data as any).color && !["#ff0000","#00ff00","#0000ff","#ffff00","#000000","#ffffff"].includes((node.data as any).color)
+                  ? "bg-primary/20"
+                  : "hover:bg-primary/10"
+              }`}
+            >
+              <SquareIcon fill={(node.data as any).color || "#000"} />
+            </button>
+           </div>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-[15px] font-medium text-muted-foreground flex items-center gap-1">
+            <TextIcon size={16} /> Texto
+          </label>
+           <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => toggleTextStyle("bold")}
+              title="Negrita"
+              className={`p-1 rounded ${
+                node.data.bold ? "bg-primary/20" : "hover:bg-primary/10"
+              }`}
+            >
+              <Bold size={16} />
+            </button>
+            <button
+              onClick={() => toggleTextStyle("italic")}
+              title="Cursiva"
+              className={`p-1 rounded ${
+                node.data.italic ? "bg-primary/20" : "hover:bg-primary/10"
+              }`}
+            >
+              <Italic size={16} />
+            </button>
+            <button
+              onClick={() => toggleTextStyle("underline")}
+              title="Subrayado"
+              className={`p-1 rounded ${
+                node.data.underline ? "bg-primary/20" : "hover:bg-primary/10"
+              }`}
+            >
+              <UnderlineIcon size={16} />
+            </button>
+            <button
+              onClick={() => toggleTextStyle("underline")}
+              title="Color"
+              className={`p-1 rounded ${
+                node.data.underline ? "bg-primary/20" : "hover:bg-primary/10"
+              }`}
+            >
+              <TypeIcon size={16} color={node.data.color} />
+            </button>
+           </div>
         </div>
 
         {/* Botón de Eliminar */}

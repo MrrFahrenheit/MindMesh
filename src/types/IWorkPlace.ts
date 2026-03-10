@@ -7,6 +7,11 @@ export interface MindMeshNodeData extends Node {
         title: string;
         label: string;
         shape?: string;
+        textColor?:string;
+        color?: string;
+        bold?: boolean;
+        italic?: boolean;
+        underline?: boolean;
     };
     position: {
         x: number;

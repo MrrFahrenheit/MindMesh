@@ -12,9 +12,10 @@ import {
     type NodeChange,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useCallback, useState } from "react";
+import { useTheme } from "next-themes";
+import { useCallback, useEffect, useState } from "react";
 import { MindMeshNode } from "../../../components/shared/MindMeshNode";
-import { DeleteNodeManager } from "../../../lib/workboardUtils";
+import { DeleteNodeManager } from "../../../lib/workboardUtils.tsx";
 import type { IEdge, MindMeshNodeData } from "../../../types/IWorkPlace";
 import EditNoveMenu from "./EditNoveMenu";
 import FunctionalDragMenu from "./FunctionalDragMenu";
@@ -29,14 +30,18 @@ export default function WorkBoard() {
         setOpenNodeMenu(true);
     }, []);
 
+    const [projectName, setProjectName] = useState<string>("New Project");
     const [nodes, setNodes] = useState<Array<Node>>(() => [
         { id: "1", type: "mindmesh", data: { title: "Primer Nodo", label: "Idea principal", shape: "square", onSelect: openMenu } as any, position: { x: 250, y: 5 } },
     ]);
     const [edges, setEdges] = useState<Array<IEdge>>([]);
+    const { theme } = useTheme();
 
     // ** Estados para gestión del menú de edición de nodos */
     const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
     const [openNodeMenu, setOpenNodeMenu] = useState<boolean>(false);
+
+    const flowTheme = theme === "dark" ? "dark" : "light";
 
     const addNode = useCallback(() => {
         const id = `${nodes.length + 1}`;
@@ -47,6 +52,10 @@ export default function WorkBoard() {
                 title: `Nuevo Nodo ${id}`,
                 label: `Describe Nodo ${id}`,
                 shape: "square",
+                color: "#ffffff",
+                bold: false,
+                italic: false,
+                underline: false,
                 onSelect: openMenu,
             } as any,
             position: { x: Math.random() * 400, y: Math.random() * 400 },
@@ -69,6 +78,10 @@ export default function WorkBoard() {
         );
     }, []);
 
+    useEffect(() => {
+        document.title = `MindMesh - ${projectName}`
+    },[])
+
     return (
         <div className="w-full h-screen relative">
             <FunctionalDragMenu onAddNode={addNode} />
@@ -79,16 +92,28 @@ export default function WorkBoard() {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
+                colorMode={flowTheme}
                 fitView
+
             >
                 {openNodeMenu && editingNodeId && (
-                  <EditNoveMenu onCloseMenu={() => setOpenNodeMenu(false)} nodeId={editingNodeId} />
+                    <EditNoveMenu onCloseMenu={() => setOpenNodeMenu(false)} nodeId={editingNodeId} />
                 )}
 
                 <DeleteNodeManager />
-                <MiniMap />
+                <MiniMap
+                    style={{
+                        backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff",
+                        border: theme === "dark" ? "1px solid #555" : "1px solid #ddd",
+                    }}
+                    nodeColor={theme === "dark" ? "#fff" : "#000"}
+                    maskColor={theme === "dark" ? "rgba(0, 0, 0, 0.3)" : "rgba(255, 255, 255, 0.3)"}
+                />
                 <Controls />
-                <Background />
+                <Background
+                    color={theme === "dark" ? "#333" : "#ccc"}
+                    variant={"dots" as any}
+                />
             </ReactFlow>
         </div>
     );

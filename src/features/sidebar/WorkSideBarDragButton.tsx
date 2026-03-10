@@ -21,7 +21,7 @@ export function WorkSideDragButton({ openMenu, onChangePosition, defaultPosition
         left: `${position.x}px`, 
         top: `${position.y}px` 
       }}
-      className="fixed z-50 hover:cursor-grab active:cursor-grabbing bg-primary text-primary-foreground p-3 rounded-full shadow-lg transition-transform hover:scale-110"
+      className="fixed z-50 hover:cursor-grab active:cursor-grabbing text-primary-foreground p-3 rounded-full shadow-lg transition-transform hover:scale-110 bg-card"
     >
       <button
         onClick={openMenu}

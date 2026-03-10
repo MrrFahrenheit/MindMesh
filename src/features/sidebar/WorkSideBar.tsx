@@ -1,4 +1,4 @@
-import { Brain, GripVertical, LayoutGrid, StickyNote, XIcon } from "lucide-react";
+import { ArrowRightSquareIcon, Brain, CardSimIcon, GripVertical, LayoutGrid, PlusIcon, ProjectorIcon, StickyNote, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { ThemeToggle } from "../../components/shared/ThemeToggle";
 
@@ -12,6 +12,8 @@ interface WorkSideBarProps {
 
 export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: WorkSideBarProps) {
     const [position, setPosition] = useState({ x, y });
+    const [projectName, setProjectName] = useState<string>("");
+    const [openSaveButton, setOpenSaveButton] = useState<boolean>(false);
   const dragging = useRef(false);
 
   const handleDragEnd = (e: React.DragEvent) => {
@@ -19,6 +21,12 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
     onChangePosition({ x: e.clientX - 40, y: e.clientY - 20 });
     dragging.current = false;
   };
+
+  const handleClickSave = () => {
+    if(projectName == "" || projectName.length <= 0){
+      setOpenSaveButton(true);
+    }
+  }
   
   return (
     <div 
@@ -79,6 +87,33 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
       <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
         Archivo
       </div>
+      <button
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors  hover:cursor-pointer hover:bg-black/30`}
+        >
+          <PlusIcon size={18} />
+          <span className="text-sm font-medium">Nuevo Proyecto</span>
+        </button>
+        <button
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors  hover:cursor-pointer hover:bg-black/30`}
+        >
+          <ProjectorIcon size={18} />
+          <span className="text-sm font-medium">Abrir Proyecto</span>
+        </button>
+       <button
+       onClick={handleClickSave}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors  hover:cursor-pointer hover:bg-black/30`}
+        >
+          <CardSimIcon size={18} />
+          <span className="text-sm font-medium">Guardar Proyecto</span>
+        </button>
+        <span className="text-xs font-medium">Escribe un nombre para el proyecto.</span>
+        {openSaveButton && <input className="bg-card/20 border border-amber-50 rounded-sm p-1 text-xs" value={"Nuevo Proyecto"} />}
+        <button
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors  hover:cursor-pointer hover:bg-black/30`}
+        >
+          <ArrowRightSquareIcon size={18} />
+          <span className="text-sm font-medium">Exportar Proyecto  </span>
+        </button>
     </div>
   );
 }

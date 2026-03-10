@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../features/sidebar/SideBar";
-import { useEffect } from "react";
 
 export default function UserLayout() {
     useEffect(() => {
@@ -17,7 +17,9 @@ export default function UserLayout() {
       />
 
             <SideBar />
-            <Outlet />
+            <div className="flex-1">
+                <Outlet />
+            </div>
         </main>
     )
 }

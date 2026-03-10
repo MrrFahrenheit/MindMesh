@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import WorkSideBar from "../../features/sidebar/WorkSideBar";
 
 export default function WorkLayout() {
+
     return (
         <main className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background transition-colors duration-500">
             <div 
