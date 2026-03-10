@@ -1,78 +1,28 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# 🧠 MindMesh: Map Your Mind, Elevate Your Flow
+MindMesh is a new canvas designed for thinkers and creators. It allows you to craft self-organizing mind maps with a speed and intuition that feels like second nature.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ✨ Why MindMesh?
+A cluttered interface leads to a cluttered mind. That’s why MindMesh offers a fully immersive environment where the atmosphere is as important as the ideas.
 
-Currently, two official plugins are available:
+Dynamic Ambience: Dive into a bespoke workspace featuring interactive particle systems that respond to your creativity and your taste.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Total Customization: Your project, your rules. Personalize the theme, tweak the particle physics, or set the mood with integrated background music—all without breaking your workflow.
 
-## React Compiler
+Intuitive Architecture: Focus on what matters. Our self-organizing nodes handle the layout, so you can focus on the logic.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## 🛠️ The Tech Behind the Mesh
+### How is MindMesh built?
+MindMesh is engineered at the intersection of performance and aesthetics. Built with a modern tech stack, it leverages hardware-accelerated rendering to ensure that even the most complex maps remain smooth and responsive.
 
-## Expanding the ESLint configuration
+## 🛠️ The Tech Stack: Engineering the Experience
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React Flow – The beating heart of MindMesh. It provides the powerful, node-based engine that makes mapping thoughts feel like magic.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Tailwind CSS – For that crisp, modern aesthetic. It allows us to build a lightning-fast, responsive UI that looks gorgeous on any screen size.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Framer Motion – Bringing the "Mesh" to life. Every transition, every particle, and every interaction is infused with butter-smooth animations for a truly tactile feel.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Lucide React – A suite of beautiful, minimalist icons that keep the interface clean, consistent, and intuitive.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- React Router DOM – The silent architect handling seamless navigation throughout the app, ensuring you never lose your flow as you move between workspaces.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-=======
-# MindMesh
-MindMesh is a tool designed to create self-organized maps in a simple, fast and intuitive way.
->>>>>>> 3ce2a14bdf82ff4fc771fc91a9b14786bb6c8e16
