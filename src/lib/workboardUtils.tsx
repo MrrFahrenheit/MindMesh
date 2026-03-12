@@ -70,17 +70,38 @@ export const getNodeFigure = (data: string): { shapeClass: string; shapeStyle: R
       };
       break;
 
-      case "romb":
+    case "romboid":
       shapeStyle = { clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" };
+      
+      backgroundSvg = (
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polygon 
+            points="50,0 100,50 50,100 0,50" 
+            fill="transparent" 
+            stroke="currentColor" 
+            strokeWidth="1" 
+          />
+        </svg>
+      );
       break;
 
-    case "romboid":
+    case "romb":
       shapeStyle = { clipPath: "polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)" };
+      backgroundSvg = (
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polygon 
+            points="20,0 100,0 80,100 0,100" 
+            fill="transparent" 
+            stroke="currentColor" 
+            strokeWidth="1" 
+          />
+        </svg>
+      );
       break;
 
     case "bubblechat":
       shapeClass += " rounded-2xl relative";
-      shapeStyle = { paddingBottom: '15px' }; 
+      shapeStyle = { paddingBottom: '15px' };
       backgroundSvg = (
         <div className="absolute -bottom-3 right-3/4 w-4 h-4 bg-card border-b-2 border-r-2 border-inherit rotate-45 transform -translate-x-1/2" />
       );

@@ -8,9 +8,10 @@ interface RgbMenuProps {
   editingNodeId:string;
   nodesOnBoard:Array<MindMeshNodeData>;
   setNodesOnBoard:React.Dispatch<React.SetStateAction<Array<MindMeshNodeData>>>;
+  type?:string;
 }
 
-export default function RgbMenu({ initialColor = "#3b82f6", editingNodeId, onClose, nodesOnBoard, setNodesOnBoard }: RgbMenuProps) {
+export default function RgbMenu({ initialColor = "#3b82f6", editingNodeId, onClose, nodesOnBoard, setNodesOnBoard, type }: RgbMenuProps) {
   const [hex, setHex] = useState(initialColor);
   const [rgb, setRgb] = useState({ r: 59, g: 130, b: 246 });
   
@@ -21,13 +22,23 @@ export default function RgbMenu({ initialColor = "#3b82f6", editingNodeId, onClo
     setNodesOnBoard((prevNodes) =>
       prevNodes.map((node) => {
         if (node.id === editingNodeId) {
-          return {
+          if(!type || type == "text"){
+            return {
             ...node,
             data: {
               ...node.data,
               textColor: color === null ? undefined : color,
             },
           };
+          }else if(type == "node"){
+            return {
+            ...node,
+            data: {
+              ...node.data,
+              color: color === null ? undefined : color,
+            },
+          };
+          }
         }
         return node;
       })

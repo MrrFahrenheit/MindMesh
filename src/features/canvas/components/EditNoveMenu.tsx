@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 interface EditNodeMenuProps {
   nodeId: string;
   onCloseMenu: () => void;
-  onOpenColorBar:() => void;
+  onOpenColorBar:(type:string) => void;
 }
 
 export default function EditNodeMenu({ nodeId, onCloseMenu, onOpenColorBar }: EditNodeMenuProps) {
@@ -115,10 +115,7 @@ export default function EditNodeMenu({ nodeId, onCloseMenu, onOpenColorBar }: Ed
             ))}
             {/* custom rgb picker */}
             <button
-              onClick={() => {
-                const rgb = prompt("Introduce un color RGB o hex (#rrggbb)");
-                if (rgb) changeNodeColor(rgb);
-              }}
+              onClick={() => onOpenColorBar("node")}
               title="Personalizado"
               className={`p-1 rounded ${
                 (node.data as any).color && !["#ff0000","#00ff00","#0000ff","#ffff00","#000000","#ffffff"].includes((node.data as any).color)
@@ -163,7 +160,7 @@ export default function EditNodeMenu({ nodeId, onCloseMenu, onOpenColorBar }: Ed
               <UnderlineIcon size={16} />
             </button>
             <button
-              onClick={onOpenColorBar}
+              onClick={() => onOpenColorBar("text")}
               title="Color"
               className={`p-1 rounded ${
                 node.data.underline ? "bg-primary/20" : "hover:bg-primary/10"

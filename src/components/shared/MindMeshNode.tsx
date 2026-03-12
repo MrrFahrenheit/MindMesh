@@ -1,11 +1,27 @@
 import { Handle, Position, useReactFlow } from "@xyflow/react";
 import { Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getNodeFigure } from "../../lib/workboardUtils.tsx";
 
 export const MindMeshNode = ({ id, data }: { id: string; data: { title: string; label: string; shape?: string; color?: string; bold?: boolean; italic?: boolean; underline?: boolean; textColor?:string, onSelect?: (node: any) => void } }) => {
   const { updateNodeData } = useReactFlow();
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!isEditing) return;
+
+    if (event.key === "Enter") {
+      setIsEditing(false);
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, [isEditing]);
 
   const figureFetch = getNodeFigure(data.shape || "rectangle");
   let shapeClass = figureFetch.shapeClass;
@@ -50,7 +66,7 @@ export const MindMeshNode = ({ id, data }: { id: string; data: { title: string; 
       {/* Renderizamos los Handles una sola vez para todo el nodo */}
       <NodeHandles />
 
-      {data.shape === "triangle" || data.shape == "bubblechat" ? (
+      {data.shape === "triangle" || data.shape == "bubblechat" || data.shape == "romboid" || data.shape == "romb" ? (
         <div className="flex flex-col items-center justify-center h-full pt-8 pb-4 px-4">
           {backgroundSvg}
           <Pencil

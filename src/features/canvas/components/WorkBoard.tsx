@@ -42,10 +42,12 @@ export default function WorkBoard() {
     // ** Estados para gestión del menú de edición de nodos */
     const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
     const [openNodeMenu, setOpenNodeMenu] = useState<boolean>(false);
+    const [typeToSetColor, setTypeToSetColor] = useState<string>("text");
 
     const flowTheme = theme === "dark" ? "dark" : "light";
 
-    const handleOpenColorBar = () => {
+    const handleOpenColorBar = (type:string = "text") => {
+        setTypeToSetColor(type);
         setOpenColorBar(prev => !prev)
     }
 
@@ -111,7 +113,7 @@ export default function WorkBoard() {
                 {openNodeMenu && editingNodeId && (
                     <EditNoveMenu onCloseMenu={() => setOpenNodeMenu(false)} nodeId={editingNodeId} onOpenColorBar={handleOpenColorBar} />
                 )}
-                {openColorBar && <RgbMenu onClose={handleOpenColorBar} editingNodeId={editingNodeId} nodesOnBoard={nodes} setNodesOnBoard={setNodes} />}
+                {openColorBar && <RgbMenu onClose={handleOpenColorBar} editingNodeId={editingNodeId} nodesOnBoard={nodes} setNodesOnBoard={setNodes} type={typeToSetColor}/>}
                 <DeleteNodeManager />
                 <MiniMap
                     style={{
