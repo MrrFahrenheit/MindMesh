@@ -38,37 +38,37 @@ export const MindMeshNode = ({ id, data }: { id: string; data: { title: string; 
     data.underline ? "underline" : "",
   ].filter(Boolean).join(" ");
 
-  // --- COMPONENTE DE HANDLES (PARA REUTILIZAR) ---
+  const handleLeftStyle = data.shape === 'romboid' ? { left: '1%', transform: 'translateX(-50%)', top:"47.5%" } : data.shape === 'romb' ? { left: '10%', transform: 'translateX(-50%)' } : {};
+  const handleRightStyle = data.shape === 'romboid' ? { left: '99%', right: 'auto', transform: 'translateX(-50%)',top:"47.5%" } : data.shape === 'romb' ? { left: '90%', right: 'auto', transform: 'translateX(-50%)' } : {};
+
   const NodeHandles = () => (
     <>
-      <Handle type="target" position={Position.Top} id="t-top" className="w-3 h-3 bg-primary!" />
-      <Handle type="source" position={Position.Top} id="s-top" className="w-3 h-3 bg-primary! opacity-0" />
+      <Handle type="target" position={Position.Top} id="t-top" className="w-3 h-3 bg-primary! z-30" />
+      <Handle type="source" position={Position.Top} id="s-top" className="w-3 h-3 bg-primary! opacity-0 z-30" />
       
-      <Handle type="target" position={Position.Bottom} id="t-bottom" className="w-3 h-3 bg-primary!" />
-      <Handle type="source" position={Position.Bottom} id="s-bottom" className="w-3 h-3 bg-primary!" />
+      <Handle type="target" position={Position.Bottom} id="t-bottom" className="w-3 h-3 bg-primary! z-30" />
+      <Handle type="source" position={Position.Bottom} id="s-bottom" className="w-3 h-3 bg-primary! z-30" />
       
-      <Handle type="target" position={Position.Left} id="t-left" className="w-3 h-3 bg-primary!" />
-      <Handle type="source" position={Position.Left} id="s-left" className="w-3 h-3 bg-primary!" />
+      <Handle type="target" position={Position.Left} id="t-left" className="w-3 h-3 bg-primary! z-30" style={handleLeftStyle} />
+      <Handle type="source" position={Position.Left} id="s-left" className="w-3 h-3 bg-primary! z-30" style={handleLeftStyle} />
       
-      <Handle type="target" position={Position.Right} id="t-right" className="w-3 h-3 bg-primary!" />
-      <Handle type="source" position={Position.Right} id="s-right" className="w-3 h-3 bg-primary!" />
+      <Handle type="target" position={Position.Right} id="t-right" className="w-3 h-3 bg-primary! z-30" style={handleRightStyle} />
+      <Handle type="source" position={Position.Right} id="s-right" className="w-3 h-3 bg-primary! z-30" style={handleRightStyle} />
     </>
   );
 
   return (
     <div 
-      className={`relative bg-card border border-border shadow-xl w-64 transition-all duration-300 hover:border-primary/50 ${shapeClass} ${
-        data.shape === "triangle" ? "p-0 " : "p-5 "
-      } ${isEditing ? "nodrag" : ""}`}
+      className={`relative bg-card border border-border shadow-xl w-64 transition-all duration-300 hover:border-primary/50 ${shapeClass} ${isEditing ? "nodrag" : ""}`}
       style={shapeStyle} 
       onDoubleClick={() => setIsEditing(e => !e)}
     >
-      {/* Renderizamos los Handles una sola vez para todo el nodo */}
       <NodeHandles />
 
       {data.shape === "triangle" || data.shape == "bubblechat" || data.shape == "romboid" || data.shape == "romb" ? (
         <div className="flex flex-col items-center justify-center h-full pt-8 pb-4 px-4">
           {backgroundSvg}
+          
           <Pencil
             size={16}
             className="absolute top-4 text-muted-foreground hover:text-primary cursor-pointer z-10"

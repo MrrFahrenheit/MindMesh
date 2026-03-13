@@ -1,5 +1,5 @@
 import { Pipette, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { MindMeshNodeData } from '../../../types/IWorkPlace';
 
 interface RgbMenuProps {
@@ -14,7 +14,8 @@ interface RgbMenuProps {
 export default function RgbMenu({ initialColor = "#3b82f6", editingNodeId, onClose, nodesOnBoard, setNodesOnBoard, type }: RgbMenuProps) {
   const [hex, setHex] = useState(initialColor);
   const [rgb, setRgb] = useState({ r: 59, g: 130, b: 246 });
-  
+  const [position,  setPosition] = useState<{x:number, y:number}>({x: window.innerWidth - 300, y: 100 });
+  const dragging = useRef(false);
 
   const onColorChange = (color: string | null) => {
     if (!editingNodeId) return;
@@ -74,8 +75,18 @@ export default function RgbMenu({ initialColor = "#3b82f6", editingNodeId, onClo
     }
   };
 
+  const handleDragEnd = (e: React.DragEvent) => {
+    if (e.clientX === 0 && e.clientY === 0) return; // Evita el salto al soltar
+    setPosition({ x: e.clientX - 100, y: e.clientY - 20 });
+    dragging.current = false;
+  };
+
   return (
-    <div className="fixed z-[100] bg-card/95 backdrop-blur-md border border-border shadow-2xl rounded-xl p-4 w-64 animate-in fade-in zoom-in duration-200">
+    <div className="fixed z-[100] bg-card/95 backdrop-blur-md border border-border shadow-2xl rounded-xl p-4 w-64 animate-in fade-in zoom-in duration-200"
+    draggable
+    style={{ left: `${position.x}px`, top: `${position.y}px` }}
+    onDragEnd={handleDragEnd}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Pipette size={16} className="text-primary" />
