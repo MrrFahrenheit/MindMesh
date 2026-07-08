@@ -35,3 +35,8 @@ export interface IConnection{
         label: string;
     };
 }
+
+export interface IMindMeshMap{
+    nodes:Array<MindMeshNodeData>,
+    edges:Array<IEdge>
+}

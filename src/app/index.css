@@ -1,20 +1,16 @@
 @import "tailwindcss";
 
-/* 1. Registramos la variante para que Tailwind reconozca la clase .dark */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* 2. Definimos las variables como tipo 'color' */
   --color-background: rgb(var(--background));
   --color-card: rgb(var(--card));
 }
 
 @layer base {
   :root {
-    /* 3. Agregamos el color-scheme para elementos nativos */
     color-scheme: light;
     
-    /* Nota: Para rgb() puro, Tailwind v4 prefiere comas si usas el wrapper rgb() arriba */
     --background: 250, 250, 255; 
     --card: 255, 255, 255;
   }
@@ -25,10 +21,9 @@
     --card: 26, 30, 46;
   }
 
-  /* 4. Aplicamos el fondo por defecto al body */
   body {
     background-color: var(--color-background);
-    color: canvastext; /* Color de texto adaptativo nativo */
+    color: canvastext; 
   }
 }
 

@@ -2,12 +2,13 @@ import { Home, Brain, LayoutTemplate, Settings, ChevronRight, PlusCircle } from 
 import { ThemeToggle } from "../../components/shared/ThemeToggle";
 import DefaultButton from "../../components/shared/DefaultButton";
 import { useNavigate, useLocation } from "react-router-dom";
+import MainSideBarButton, { type ISideBarButton } from "./components/MainSideBarButton";
+import MainSideBarButtonMobile from "./components/MainSideBarButtonMobile";
 
 export default function SideBar() {
   const navigate = useNavigate();
-  const location = useLocation(); // Para detectar la ruta activa dinámicamente
 
-  const menuItems = [
+  const menuItems:Array<ISideBarButton> = [
     { icon: <Home size={22} />, label: "Inicio", path: "/app/" },
     { icon: <Brain size={22} />, label: "Mapas", path: "/app/maps" },
     { icon: <LayoutTemplate size={22} />, label: "Plantillas", path: "/app/templates" },
@@ -36,28 +37,9 @@ export default function SideBar() {
         </div>
 
         <nav className="flex-1 px-3 space-y-1">
-          {menuItems.map((item, index) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <button
-                key={index}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all group ${
-                  isActive 
-                    ? "bg-primary/10 text-primary" 
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                } hover:cursor-pointer`}
-                onClick={() => navigate(item.path)}
-              >
-                <div className="flex items-center gap-3">
-                  <span className={isActive ? "text-primary" : "group-hover:text-primary transition-colors"}>
-                    {item.icon}
-                  </span>
-                  <span className="font-medium text-sm">{item.label}</span>
-                </div>
-                {isActive && <ChevronRight size={14} />}
-              </button>
-            );
-          })}
+          {menuItems.map((item, index) => (
+            <MainSideBarButton buttonData={item} key={index} />
+          ))}
         </nav>
 
         <div className="p-4 border-t border-border bg-accent/20">
@@ -74,23 +56,9 @@ export default function SideBar() {
       {/* --- BOTTOM BAR (Móvil: < md) --- */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-t border-border px-1 pb-safe-area-inset-bottom">
         <div className="flex justify-around items-center h-16">
-          {menuItems.map((item, index) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <button
-                key={index}
-                onClick={() => navigate(item.path)}
-                className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors ${
-                  isActive ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                <div className={`p-1 rounded-lg ${isActive ? "bg-primary/10" : ""}`}>
-                  {item.icon}
-                </div>
-                <span className="text-[10px] font-medium mt-1">{item.label}</span>
-              </button>
-            );
-          })}
+          {menuItems.map((item, index) => (
+              <MainSideBarButtonMobile buttonData={item} key={index} />
+          ))}
           
           <button 
             onClick={() => navigate("/minding/")}

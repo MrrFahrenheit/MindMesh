@@ -2,20 +2,27 @@ import { ArrowRightSquareIcon, Brain, CardSimIcon, GripVertical, LayoutGrid, Plu
 import { useRef, useState } from "react";
 import { ThemeToggle } from "../../components/shared/ThemeToggle";
 import DefaultButton from "../../components/shared/DefaultButton";
+import { saveMentalMap } from "../../hooks/WorkContext";
+import { useReactFlow } from "@xyflow/react";
+import { v4 as uuidv4 } from 'uuid';
+import toast from "react-hot-toast";
+import { downloadImage, getMapFile } from "./utils/ToImage";
 
 interface WorkSideBarProps {
   onAddNode: (type: string) => void;
-  x: number; // Coordenada X
-  y: number; // Coordenada Y
-  handleClose: () => void; // Función para cerrar el sidebar
-  onChangePosition: (position: { x: number; y: number }) => void; // Función para actualizar la posición
+  x: number;
+  y: number;
+  handleClose: () => void; 
+  onChangePosition: (position: { x: number; y: number }) => void; 
 }
 
 export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: WorkSideBarProps) {
     const [position, setPosition] = useState({ x, y });
     const [projectName, setProjectName] = useState<string>("");
     const [openSaveButton, setOpenSaveButton] = useState<boolean>(false);
-  const dragging = useRef(false);
+    const dragging = useRef(false);
+
+    const { toObject } = useReactFlow();
 
   const handleDragEnd = (e: React.DragEvent) => {
     setPosition({ x: e.clientX - 40, y: e.clientY - 20 });
@@ -28,6 +35,23 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
       setOpenSaveButton(prev => !prev);
     }
   }
+
+  const handleSaveMap = async () => {
+    const currentFlow = toObject();
+    const image = await getMapFile();
+    alert(image);
+
+    const mapData = {
+      id: uuidv4(),
+      name: projectName,
+      updatedAt: new Date().toISOString(),
+      flow: currentFlow,
+      thumbnail: image
+    };
+    saveMentalMap(mapData.id, mapData);
+    toast.success("Se guardo el mapa")
+    
+  };
   
   return (
     <div 
@@ -51,7 +75,6 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
         Crear elementos
       </div>
 
-      {/* array de acciones para los botones */}
       {[
         {
           icon: <Brain size={18} />,
@@ -110,8 +133,9 @@ export function WorkSideBar({ onAddNode, x, y, handleClose, onChangePosition }: 
         {openSaveButton && (
         <div className="bg-zinc-900 p-3 rounded-md">
         <span className="text-xs font-medium text-white">Escribe un nombre para el proyecto.</span>
-           <input className="bg-card/20 border border-amber-50 rounded-sm p-1 text-xs mb-2" />
-         <DefaultButton label="Guardar" Icon={<SaveIcon size={16} />} className="text-white" />
+           <input className="bg-card/20 border border-amber-50 rounded-sm p-1 text-xs mb-2" value={projectName}
+           onChange={(e) => setProjectName(e.target.value)} />
+         <DefaultButton label="Guardar" Icon={<SaveIcon size={16} />} className="text-white" onClickFunc={handleSaveMap} />
 
         </div>
         

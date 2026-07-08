@@ -26,6 +26,7 @@ const nodeTypes = {
 };
 
 export default function WorkBoard() {
+    
     const openMenu = useCallback((node: Node) => {
         setEditingNodeId(node.id);
         setOpenNodeMenu(true);
@@ -107,7 +108,7 @@ export default function WorkBoard() {
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
                 colorMode={flowTheme}
-                fitView
+                fitView attributionPosition={"top-right"}
 
             >
                 {openNodeMenu && editingNodeId && (

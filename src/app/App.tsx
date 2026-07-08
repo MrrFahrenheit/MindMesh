@@ -8,12 +8,14 @@ import { Providers } from "./Providers"
 import UserLayout from "./UserLayout"
 import WorkPage from "./work-page/WorkPage"
 import WorkLayout from "./work-page/WorkLayout"
+import { Toaster } from "react-hot-toast"
 
 function App() {
 
   return (
     <>
       <Providers>
+        <Toaster />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/app/*" element={<UserLayout />}>
