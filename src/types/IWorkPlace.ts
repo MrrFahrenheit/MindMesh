@@ -1,4 +1,4 @@
-import type { Edge, Node } from "@xyflow/react";
+import type { Edge, Node, ReactFlowJsonObject } from "@xyflow/react";
 
 export interface MindMeshNodeData extends Node {
     id: string;
@@ -7,7 +7,7 @@ export interface MindMeshNodeData extends Node {
         title: string;
         label: string;
         shape?: string;
-        textColor?:string;
+        textColor?: string;
         color?: string;
         bold?: boolean;
         italic?: boolean;
@@ -25,7 +25,7 @@ export interface IEdge extends Edge {
     data: { label: string };
 }
 
-export interface IConnection{
+export interface IConnection {
     source: string;
     target: string;
     sourceHandle?: string;
@@ -36,7 +36,10 @@ export interface IConnection{
     };
 }
 
-export interface IMindMeshMap{
-    nodes:Array<MindMeshNodeData>,
-    edges:Array<IEdge>
+export interface IMindMeshMap {
+    id: string;
+    name: string;
+    updatedAt: string;
+    flow: ReactFlowJsonObject<Node, Edge>;
+    thumbnail: string;
 }

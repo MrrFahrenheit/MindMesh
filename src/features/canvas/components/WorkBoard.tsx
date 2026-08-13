@@ -71,7 +71,6 @@ export default function WorkBoard() {
         setNodes((nds) => [...nds, newNode]);
     }, [nodes]);
 
-    // Handlers obligatorios de React Flow
     const onNodesChange = useCallback((changes: Array<NodeChange>) => {
         setNodes((nds) =>
             applyNodeChanges(changes, nds).map(node => ({

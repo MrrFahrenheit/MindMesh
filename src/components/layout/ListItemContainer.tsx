@@ -1,6 +1,4 @@
-import type { JSX } from "react";
-
-export default function ListItemContainer({image, title, date, deleteFun, edit, id} : {image?:string, title:string, date:string, deleteFun?: (mapIdString:string) => void, edit?: () => void, id: string }) {
+export default function ListItemContainer({image, title, date, deleteFun, edit, id} : {image?:string, title:string, date:string, deleteFun?: (mapIdString:string) => void, edit?:boolean, id: string }) {
     
     return (
         <div className="w-3/4 max-h-50 flex flex-col bg-gray-950 p-2 rounded-md gap-1 hover:bg-gray-800 transition-all hover:cursor-pointer">
