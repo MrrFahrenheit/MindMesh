@@ -34,6 +34,7 @@ export default function Form({
         });
 
         onSubmit?.(data);
+        
     };
 
     const renderField = (field: IFormCell) => {
