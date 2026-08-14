@@ -10,7 +10,7 @@ export default function HomePage() {
     document.title = "MindMesh - Conecta tus ideas, mapea tu mente";
   }, [])
 
-  const [actualForm, setActualForm] = useState<number | null>(null);
+  const [actualForm, setActualForm] = useState<"register" | "login">("register");
 
   const navigate = useNavigate();
 
@@ -33,17 +33,17 @@ export default function HomePage() {
       </nav>
 
       <section className="z-10 text-center px-4 flex flex-col items-center max-w-4xl">
-        {actualForm == null ? <HomePagePresentation /> : <Auth actualPage={actualForm} />}
+        {actualForm == null ? <HomePagePresentation /> : <Auth mode={actualForm} />}
 
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <button className="group relative px-10 py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/25 dark:shadow-primary/10 border border-border hover:cursor-pointer"
-            onClick={() => setActualForm(0)}>
+            onClick={() => setActualForm("register")}>
             Crear Cuenta
             {/* Efecto de brillo al pasar el mouse */}
             <span className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </button>
           <button className="group relative px-10 py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/25 dark:shadow-primary/10 border border-border hover:cursor-pointer"
-            onClick={() => setActualForm(1)}>
+            onClick={() => setActualForm("login")}>
             Iniciar Sesion
             {/* Efecto de brillo al pasar el mouse */}
             <span className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />

@@ -6,6 +6,7 @@ type FormProps = {
     title?: string;
     submitText?: string;
     onSubmit?: (data: Record<string, string | number | boolean>) => void;
+    disabled:boolean
 };
 
 export default function Form({
@@ -13,6 +14,7 @@ export default function Form({
     title,
     submitText = "Enviar",
     onSubmit,
+    disabled
 }: FormProps) {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -298,6 +300,7 @@ export default function Form({
                         duration-300
                         cursor-pointer
                     "
+                    disabled={disabled}
                 >
                     <span className="relative z-10">
                         {submitText}

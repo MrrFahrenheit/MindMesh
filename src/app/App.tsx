@@ -9,6 +9,7 @@ import UserLayout from "./UserLayout"
 import WorkPage from "./work-page/WorkPage"
 import WorkLayout from "./work-page/WorkLayout"
 import { Toaster } from "react-hot-toast"
+import { ProtectedRoute } from "../components/ProtectedRoute"
 
 function App() {
 
@@ -17,8 +18,11 @@ function App() {
       <Providers>
         <Toaster />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/app/*" element={<UserLayout />}>
+          <Route element={<ProtectedRoute type="public" />}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
+          <Route element={<ProtectedRoute type="private" />}>
+            <Route path="/app/*" element={<UserLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="maps" element={<Maps />} />
             <Route path="templates" element={<Templates />} />
@@ -26,6 +30,7 @@ function App() {
           </Route>
           <Route path="/minding/" element={<WorkLayout />}>
             <Route index element={<WorkPage />} />
+          </Route>
           </Route>
         </Routes>
       </Providers>
