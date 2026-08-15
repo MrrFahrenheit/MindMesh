@@ -1,6 +1,6 @@
 export type MindUser = {
-    mindUserId?:string | null,
-    mindEmail:string,
-    mindPassword:string,
-    mindNick:string,
+    mind_user_id?:string | null,
+    mind_email:string,
+    mind_password:string,
+    mind_nick:string,
 }

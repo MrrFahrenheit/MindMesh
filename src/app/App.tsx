@@ -23,14 +23,14 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute type="private" />}>
             <Route path="/app/*" element={<UserLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="maps" element={<Maps />} />
-            <Route path="templates" element={<Templates />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-          <Route path="/minding/" element={<WorkLayout />}>
-            <Route index element={<WorkPage />} />
-          </Route>
+              <Route index element={<Dashboard />} />
+              <Route path="maps" element={<Maps />} />
+              <Route path="templates" element={<Templates />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+            <Route path="/minding/" element={<WorkLayout />}>
+              <Route index element={<WorkPage />} />
+            </Route>
           </Route>
         </Routes>
       </Providers>

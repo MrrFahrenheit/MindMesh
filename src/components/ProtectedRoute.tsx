@@ -1,29 +1,42 @@
-// src/components/ProtectedRoute.tsx
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie'; 
 import { apiClient } from '../lib/api-client';
-// O usa tu Custom Hook de estado de autenticación: const { isAuthenticated } = useAuth();
+import { useEffect, useState } from 'react';
 
 interface ProtectedRouteProps {
   type: 'public' | 'private';
 }
 
 export const ProtectedRoute = ({ type }: ProtectedRouteProps) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const location = useLocation();
 
-  // 1. Verificar si existe la sesión (Si la cookie no es HttpOnly)
-  const token = false;
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        await apiClient.get('/sesions/me');
+        setIsAuthenticated(true);
+      } catch {
+        setIsAuthenticated(false);
+      }
+    };
 
-  // 2. Si no hay token y quiere entrar a una ruta privada -> Redirigir a /auth
-  if (!token && type === 'private') {
+    checkSession();
+  }, []);
+
+  // Todavía estamos comprobando la cookie
+  if (isAuthenticated === null) {
+    return <div>Cargando...</div>;
+  }
+
+  // Ruta privada + no autenticado
+  if (type === 'private' && !isAuthenticated) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  // 3. Si hay token y quiere entrar a una ruta pública (/auth, /sign-in) -> Redirigir a /home
-  if (token && type === 'public') {
-    return <Navigate to="/home" replace />;
+  // Ruta pública + autenticado
+  if (type === 'public' && isAuthenticated) {
+    return <Navigate to="/app" replace />;
   }
 
-  // 4. Si cumple las condiciones, renderiza la ruta hija
   return <Outlet />;
 };
